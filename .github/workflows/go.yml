@@ -23,11 +23,6 @@ jobs:
   runs-on: ubuntu-latest
   environment: production
   steps:
-  - name: Login via Az module
-    uses: azure/login@v1
-    with:
-      creds: ${{secrets.AZURE_CREDENTIALS}}
-      enable-AzPSSession: true 
   # checkout the repo 
   - uses: actions/checkout@master
   # setup Go
