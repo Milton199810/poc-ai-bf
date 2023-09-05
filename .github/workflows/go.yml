@@ -34,8 +34,7 @@ jobs:
   # install dependencies
   - name: go build
     working-directory: ${{ env.WORKING_DIRECTORY }}
-    run: |
-     go build
+    run: go build ./cmd/app/main.go
   - name: 'Deploy to Azure Web App'
     id: deploy-to-webapp
     uses: azure/webapps-deploy@v2
