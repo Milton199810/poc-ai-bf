@@ -20,5 +20,6 @@
 # Go workspace file
 go.work
 
-# DotEnv files
-#**/config/.env*
+# Config files
+**/config/.env*
+**/config/*.json
