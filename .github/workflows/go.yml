@@ -1,54 +1,3 @@
-# # Go on Linux Web App
-# # Build a Go project and deploy it to Azure as a Linux web app.
-# name: Deploy Go package to Azure Web App as a Linux web app.
-# on:
-#     push:
-#       branches:
-#         - main
-#     workflow_dispatch:
-# # CONFIGURATION
-# # For help, go to https://github.com/Azure/Actions
-# #
-# # 1. Set up the following secrets in your repository:
-# #   AZURE_PUBLISH_PROFILE
-# #
-# # 2. Change these variables for your configuration:
-# env:
-#   AZURE_WEBAPP_NAME: poc-ai-bf2 # set this to your application's name
-#   WORKING_DIRECTORY: '.'        # set this to the path to your path of working directory inside github repository, defaults to the repository root
-#   GO_VERSION: '1.19'            # set this to your application's go version
-
-# jobs:
-#  build-and-deploy:
-#   runs-on: ubuntu-latest
-#   environment:
-#     name: 'Production'
-#     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-#   steps:
-#   # checkout the repo 
-#   - uses: actions/checkout@master
-#   # setup Go
-#   - name: Setup Go
-#     uses: actions/setup-go@v3
-#     with:
-#      go-version: ${{ env.GO_VERSION }}
-#   - run: go version
-#   # install dependencies
-#   - name: go build
-#     working-directory: ${{ env.WORKING_DIRECTORY }}
-#     run: | 
-#       cp ./cmd/app/web.config ./web.config
-#       zip -r deployment_package.zip cmd/app web.config
-#       go build -v ./...
-#   - name: 'Deploy to Azure Web App'
-#     id: deploy-to-webapp
-#     uses: azure/webapps-deploy@v2
-#     with:
-#       app-name: ${{ env.AZURE_WEBAPP_NAME }}
-#       slot-name: 'Production'
-#       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-#       package: ./deployment_package.zip
-
 name: Build Go app and push to Azure
 
 on:
@@ -69,8 +18,17 @@ jobs:
       with:
         go-version: 1.19
 
+    - name: Copy static template files
+      run: xcopy /i templates build\templates
+
+    - name: Copy static public files
+      run: xcopy /i public build\public
+
     - name: Build
-      run: go build -v ./...
+      run: go build -o build/go-app.exe -v
+
+    - name: Test
+      run: go test
       
     - name: Deploy to Azure
       uses: Azure/webapps-deploy@v2
