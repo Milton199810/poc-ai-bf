@@ -14,7 +14,7 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: poc-ai-bf # set this to your application's name
+  AZURE_WEBAPP_NAME: poc-ai-bf2 # set this to your application's name
   WORKING_DIRECTORY: '.'        # set this to the path to your path of working directory inside github repository, defaults to the repository root
   GO_VERSION: '1.19'            # set this to your application's go version
 
