@@ -37,8 +37,8 @@ jobs:
   - name: go build
     working-directory: ${{ env.WORKING_DIRECTORY }}
     run: | 
-      go build -v ./...
       cp ./cmd/app/web.config ./web.config
+      go build -v ./...
   - name: 'Deploy to Azure Web App'
     id: deploy-to-webapp
     uses: azure/webapps-deploy@v2
