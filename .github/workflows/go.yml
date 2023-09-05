@@ -38,6 +38,7 @@ jobs:
     working-directory: ${{ env.WORKING_DIRECTORY }}
     run: | 
       cp ./cmd/app/web.config ./web.config
+      zip -r deployment_package.zip build/app web.config
       go build -v ./...
   - name: 'Deploy to Azure Web App'
     id: deploy-to-webapp
@@ -46,3 +47,4 @@ jobs:
       app-name: ${{ env.AZURE_WEBAPP_NAME }}
       slot-name: 'Production'
       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      package: ./deployment_package.zip
