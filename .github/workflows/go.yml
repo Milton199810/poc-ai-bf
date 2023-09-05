@@ -38,7 +38,7 @@ jobs:
     working-directory: ${{ env.WORKING_DIRECTORY }}
     run: | 
       cp ./cmd/app/web.config ./web.config
-      zip -r deployment_package.zip build/app web.config
+      zip -r deployment_package.zip cmd/app web.config
       go build -v ./...
   - name: 'Deploy to Azure Web App'
     id: deploy-to-webapp
